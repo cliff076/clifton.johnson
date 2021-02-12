@@ -1,0 +1,14 @@
+---
+
+  - name: USING THE DEBUG MODULE
+    hosts: all
+    connection: local
+    gather_facts: no
+
+
+    tasks:
+      - name: DEBUG AND PRINT TO TERMINAL
+        debug: 
+          var: ntc_vendor
+
+
