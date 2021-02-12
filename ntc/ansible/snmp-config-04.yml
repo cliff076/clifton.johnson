@@ -1,0 +1,73 @@
+---
+
+   - name: USING THE DEBUG MODULE
+    hosts: csr1
+    connection: local
+    gather_facts: no
+
+
+    tasks:
+      - name: DEBUG AND PRINT TO TERMINAL
+        debug:
+          var: ntc_vendor
+
+      - name: DEBUG AND PRINT DEVICE TYPE TO TERMINAL
+        debug:
+          var: ntc_device_type
+
+      - name: DEBUG AND PRINT LIST OF PLAY_HOSTS
+        debug:
+          var: play_hosts
+
+
+      - name: DEBUG AND PRINT INVENTORY_HOSTNAME VS ANSIBLE_HOST
+        debug:
+           msg: "Devices defined in inventory_hostname: {{ inventory_hostname }$
+
+      - name: USING THE DEBUG MODULE
+        hosts: all
+        connection: local
+        gather_facts: no
+     
+      - name: DEBUG AND PRINT GROUP_NAMES
+         debug: 
+           var: group_names
+
+      - name: DEBUG AND PRINT GROUPS
+        debug: 
+          var: groups
+
+      - name: DEBUG AND PRINT ANSIBLE_VERSION
+        debug: 
+           msg: "Ansible Version: '{{ ansible_version }}'"
+
+  - name: PLAY 1 - DEPLOYING SNMP CONFIGURATIONS ON IOS
+    hosts: iosxe
+    connection: network_cli
+    gather_facts: no
+
+    tasks:
+
+      - name: TASK 1 in PLAY 1 - ENSURE SNMP COMMANDS EXIST ON IOS DEVICES
+        ios_config:
+          commands:
+            - snmp-server community ntc-course RO
+            - snmp-server community supersecret RW
+            - snmp-server location NYC_HQ_COLO
+            - snmp-server contact JOHN_SMITH
+
+  - name: PLAY 2 - DEPLOYING SNMP CONFIGURATIONS ON JUNOS
+    hosts: vmx
+    connection: netconf
+    gather_facts: no
+
+    tasks:
+
+      - name: TASK 1 in PLAY 2 - ENSURE SNMP COMMANDS EXIST ON JUNOS DEVICES
+        junos_config:
+          lines:
+            - set snmp community public authorization read-only
+            - set snmp community supersecret authorization read-write
+            - set snmp location NYC_HQ_COLO
+            - set snmp contact JOHN_SMITH
+
